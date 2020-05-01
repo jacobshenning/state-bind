@@ -24,6 +24,7 @@ class Chat extends React.Component {
         this.setupChannel = this.setupChannel.bind(this);
         this.voteReverse = this.voteReverse.bind(this);
         this.addMessage = this.addMessage.bind(this);
+        this.scrollToBottom = this.scrollToBottom.bind(this);
     }
 
     muted (text) {
@@ -57,7 +58,7 @@ class Chat extends React.Component {
     }
 
     addMessage(message) {
-        const { generalChannel, ignored_user, other_user, room, user } = this.state;
+        const { ignored_user, other_user, room, user } = this.state;
         let person_one = '';
         let person_two = '';
         if (room.reversed) {
@@ -72,6 +73,7 @@ class Chat extends React.Component {
         } else {
             this.muted(person_two + " sent a message to " + person_one);
         }
+        this.scrollToBottom();
     }
 
     setupChannel() {
@@ -223,6 +225,11 @@ class Chat extends React.Component {
         }
     }
 
+    scrollToBottom () {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+
+
     voteReverse (e) {
         e.preventDefault();
         const { voted, room } = this.state;
@@ -253,7 +260,15 @@ class Chat extends React.Component {
         const message_box = messages.map((message, index) => (
             <p key={index} className={message.from ? '' : 'mutedMessage'}><strong>{ message.from }{ message.from ? ':' : ''} </strong>{ message.text }</p>
         ));
-        const arrow = room.reversed ? '<-' : '->' ;
+        const hint = joined ? (
+            <div>
+                <p><strong>Your sending messages to: </strong>{ room.reversed ? other_user : ignored_user}</p>
+                <p><strong>Sending messages to you: </strong>{ room.reversed ? ignored_user : other_user}</p>
+            </div>
+        ) : (
+            <div></div>
+        )
+        const arrow = room.reversed ? <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg> : <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg> ;
         const roomStatus = joined ? (
             <div className="card-body">
                 <h3>Conversation Direction</h3>
@@ -262,28 +277,42 @@ class Chat extends React.Component {
             </div>
         ) : (
             <div className="card-body">
-                <p>Waiting of a full room</p>
+                <p>Waiting for a full room</p>
             </div>
         );
         const chat_placeholder = joined ? "Say anything" : "Loading...";
         const title = user.name ?? 'Chat Box';
         return (
             <div className="row py-5 my-5">
-                <div className="col-6">
+                <div className="col-12 col-md-6 mt-3">
                     <div className="card">
                         <div className="card-header bg-primary text-white">{title}</div>
                         <div id="messages" className="card-body">
                             {message_box}
+                            <div style={{ float:"left", clear: "both" }}
+                                ref={(el) => { this.messagesEnd = el; }}></div>
                         </div>
                         <div className="card-footer d-flex">
                             <input value={this.state.message} onKeyPress={this.handleKeypress} onChange={this.handleKeypress} className="col py-2" id="chat-input" type="text" placeholder={chat_placeholder} autoFocus disabled={!joined}/>
                         </div>
                     </div>
                 </div>
-                <div className="col-6">
+                <div className="col-12 col-md-6 mt-3">
                     <div className="card">
                         <div className="card-header bg-primary text-white">Room Status</div>
                         {roomStatus}
+                    </div>
+                    <div className="card mt-3">
+                        <div className="card-header bg-primary text-white">Understanding the Flow</div>
+                        <div className="card-body">
+                            <p>
+                                There are three people in the chat room.
+                                Your only able to send messages to one of those people.
+                                Only one of those people can send messages to you.
+                                The person who you can send messages to is not the same person who can send messages to you and vise versa.
+                            </p>
+                            {hint}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,11 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.png" />
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>State Bind | A One Way Binding Chat App</title>
 
     <!-- Scripts -->
     <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
@@ -77,6 +78,10 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <div class="container pb-4">
+            <div class="text-muted">Built by Jacob Henning. MIT License. GitHub Repository. Built for the Twilio Hackathon.</div>
+        </div>
     </div>
 </body>
 </html>

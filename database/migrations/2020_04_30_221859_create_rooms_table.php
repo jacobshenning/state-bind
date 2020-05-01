@@ -18,8 +18,8 @@ class CreateRoomsTable extends Migration
             $table->string('name');
             $table->boolean('full')->nullable();
             $table->boolean('reversed')->default(false);
-            $table->integer('reverse_votes')->nullable();
-            $table->datetime('reverse_cooldown')->nullable();
+            $table->integer('reverse_votes')->default(0);
+            $table->datetime('reverse_cooldown')->default(\Carbon\Carbon::now()->addSeconds(180));
             $table->timestamps();
         });
     }
