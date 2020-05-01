@@ -80,7 +80,7 @@
         </main>
 
         <div class="container pb-4">
-            <div class="text-muted">Built by Jacob Henning. MIT License. GitHub Repository. Built for the Twilio Hackathon.</div>
+            <div class="text-muted"><a href="https://stackoverflow.com/users/story/9086856" target="_blank">Built by Jacob Henning.</a> <a href="https://github.com/jacobshenning/state-bind/blob/master/LICENSE">MIT License.</a> <a href="https://github.com/jacobshenning/state-bind" target="_blank">GitHub Repository.</a> <a href="https://dev.to/devteam/announcing-the-twilio-hackathon-on-dev-2lh8">Built for the Twilio Hackathon.</a></div>
         </div>
     </div>
 </body>
