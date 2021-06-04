@@ -307,7 +307,7 @@ class Chat extends React.Component {
                         <div className="card-body">
                             <p>
                                 There are three people in the chat room.
-                                Your only able to send messages to one of those people.
+                                You're only able to send messages to one of those people.
                                 Only one of those people can send messages to you.
                                 The person who you can send messages to is not the same person who can send messages to you and vise versa.
                             </p>
