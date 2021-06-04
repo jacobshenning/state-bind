@@ -262,7 +262,7 @@ class Chat extends React.Component {
         ));
         const hint = joined ? (
             <div>
-                <p><strong>Your sending messages to: </strong>{ room.reversed ? other_user : ignored_user}</p>
+                <p><strong>You're sending messages to: </strong>{ room.reversed ? other_user : ignored_user}</p>
                 <p><strong>Sending messages to you: </strong>{ room.reversed ? ignored_user : other_user}</p>
             </div>
         ) : (
